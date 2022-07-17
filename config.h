@@ -90,7 +90,8 @@ static Key keys[] = {
 	{ 0,                       	XF86XK_AudioRaiseVolume, spawn, SHCMD("/usr/bin/pactl set-sink-volume 0 +5% && /home/matt/Code/scripts/lightup.sh") },
 	{ 0,				XF86XK_MonBrightnessUp,	spawn,	{.v = light_up} },
 	{ 0,				XF86XK_MonBrightnessDown, spawn, {.v = light_down} },
-
+	
+	{0, 												XF86XK_Launch1, spawn, SHCMD("systemctl suspend")},
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,             		XK_a,      rotatestack,    {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_j,      rotatestack,    {.i = +1 } },
