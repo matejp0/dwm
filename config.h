@@ -37,6 +37,7 @@ static const Rule rules[] = {
 	{ "Gimp",     NULL,       NULL,       0,            0,             1,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 1,       1,             0,           -1 },
 	{ "Thunar",   NULL,       NULL,       1 << 5,       1,             0,           -1 },
+	{ "thunderbird",   NULL,  NULL,       1 << 4,       1,             0,           -1 },
 };
 
 /* layout(s) */
@@ -84,10 +85,11 @@ static Key keys[] = {
 	{ MODKEY,             		XK_e,	   spawn,     	   {.v = firefox } },
 	{ MODKEY,             		XK_z,	   spawn,     	   {.v = thunar } },
 	{ MODKEY,             		XK_p, 	   spawn,          SHCMD("pavucontrol") },
+	{ MODKEY,             		XK_r, 	   spawn,          SHCMD("rhythmbox") },
 
-	{ 0,                       	XF86XK_AudioLowerVolume, spawn, SHCMD("/usr/bin/pactl set-sink-volume 0 -5% && /home/matt/Code/scripts/lightdown.sh") },
+	{ 0,                       	XF86XK_AudioLowerVolume, spawn, SHCMD("/usr/bin/pactl set-sink-volume 0 -5% && /home/matt/Code/scripts/lightdown.sh &") },
 	{ 0,                       	XF86XK_AudioMute, spawn, {.v = mutevol } },
-	{ 0,                       	XF86XK_AudioRaiseVolume, spawn, SHCMD("/usr/bin/pactl set-sink-volume 0 +5% && /home/matt/Code/scripts/lightup.sh") },
+	{ 0,                       	XF86XK_AudioRaiseVolume, spawn, SHCMD("/usr/bin/pactl set-sink-volume 0 +5% && /home/matt/Code/scripts/lightup.sh &") },
 	{ 0,				XF86XK_MonBrightnessUp,	spawn,	{.v = light_up} },
 	{ 0,				XF86XK_MonBrightnessDown, spawn, {.v = light_down} },
 	
