@@ -34,11 +34,15 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      		instance    title       tags mask     switchtotag    isfloating   monitor */
-	{ "Gimp",     		NULL,       NULL,       0,            0,             1,           -1 },
+	{ "NvimCode",  		NULL,       NULL,       1 << 0,       1,             0,           -1 },
 	{ "Firefox",  		NULL,       NULL,       1 << 1,       1,             0,           -1 },
-	{ "Thunar",   		NULL,       NULL,       1 << 5,       1,             0,           -1 },
-	{ "thunderbird",  NULL,  			NULL,       1 << 4,       1,             0,           -1 },
+	{ "Gimp",     		NULL,       NULL,       1 << 3,       1,             0,           -1 },
 	{ "Rawtherapee", 	NULL, 			NULL,				1 << 3,				1,						 0,						-1 },
+	{ "NvimSchool",  	NULL,       NULL,       1 << 3,       1,             0,           -1 },
+	{ "thunderbird",  NULL,  			NULL,       1 << 4,       1,             0,           -1 },
+	{ "Thunar",   		NULL,       NULL,       1 << 5,       1,             0,           -1 },
+	{ "Rhythmbox", 		NULL, 			NULL,				1 << 6,				1,						 0,						-1 },
+
 };
 
 /* layout(s) */
@@ -87,6 +91,11 @@ static Key keys[] = {
 	{ MODKEY,             		XK_z,	   spawn,     	   {.v = thunar } },
 	{ MODKEY,             		XK_p, 	   spawn,          SHCMD("pavucontrol") },
 	{ MODKEY,             		XK_r, 	   spawn,          SHCMD("rhythmbox") },
+	{ MODKEY,             		XK_t, 	   spawn,          SHCMD("rawtherapee") },
+	{ MODKEY,             		XK_g, 	   spawn,          SHCMD("gimp") },
+	{ MODKEY,             		XF86XK_AudioMicMute, spawn, SHCMD("cadence") },
+	{ MODKEY,             		XK_c, 	   spawn,          SHCMD("alacritty --class nvim-code,NvimCode -e nvim ~/Code") },
+	{ MODKEY,             		XK_s, 	   spawn,          SHCMD("alacritty --class nvim-school,NvimSchool -e nvim ~/Documents/School") },
 
 	{ 0,                       	XF86XK_AudioLowerVolume, spawn, SHCMD("/usr/bin/pactl set-sink-volume 0 -5% && /home/matt/Code/scripts/lightdown.sh &") },
 	{ 0,                       	XF86XK_AudioMute, spawn, {.v = mutevol } },
