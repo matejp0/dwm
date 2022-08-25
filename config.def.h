@@ -36,6 +36,7 @@ static const Rule rules[] = {
 	/* class      		instance    title       tags mask     switchtotag    isfloating   monitor */
 	{ "NvimCode",  		NULL,       NULL,       1 << 0,       1,             0,           -1 },
 	{ "Firefox",  		NULL,       NULL,       1 << 1,       1,             0,           -1 },
+	{ "Cadence",     	NULL,       NULL,       1 << 2,       1,             0,           0 },
 	{ "Gimp",     		NULL,       NULL,       1 << 3,       1,             0,           -1 },
 	{ "Rawtherapee", 	NULL, 			NULL,				1 << 3,				1,						 0,						-1 },
 	{ "NvimSchool",  	NULL,       NULL,       1 << 3,       1,             0,           -1 },
@@ -72,62 +73,56 @@ static const Layout layouts[] = {
 /* commands */
 static const char *dmenucmd[] = {"rofi -show run", NULL}; 
 static char dmenumon[2] = "0";
-static const char *termcmd[]  = { "alacritty", NULL };
-static const char *firefox[]  = { "firefox", NULL };
-static const char *thunar[]  = { "thunar", NULL };
 
 #include <X11/XF86keysym.h>
 
-static const char *mutevol[] = { "/usr/bin/pactl", "set-sink-mute",   "0", "toggle",  NULL };
-
-static const char *light_up[] = {"/usr/bin/light", "-A", "5", NULL};
-static const char *light_down[] = {"/usr/bin/light", "-U", "5", NULL};
-
 static Key keys[] = {
-	/* modifier                     key        function        argument */
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          SHCMD("rofi -show run") },
-	{ MODKEY,             		XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,             		XK_e,	   spawn,     	   {.v = firefox } },
-	{ MODKEY,             		XK_z,	   spawn,     	   {.v = thunar } },
-	{ MODKEY,             		XK_p, 	   spawn,          SHCMD("pavucontrol") },
-	{ MODKEY,             		XK_r, 	   spawn,          SHCMD("rhythmbox") },
-	{ MODKEY,             		XK_t, 	   spawn,          SHCMD("rawtherapee") },
-	{ MODKEY,             		XK_g, 	   spawn,          SHCMD("gimp") },
-	{ MODKEY,             		XF86XK_AudioMicMute, spawn, SHCMD("cadence") },
-	{ MODKEY,             		XK_c, 	   spawn,          SHCMD("alacritty --class nvim-code,NvimCode -e nvim ~/Code") },
-	{ MODKEY,             		XK_s, 	   spawn,          SHCMD("alacritty --class nvim-school,NvimSchool -e nvim ~/Documents/School") },
+	/* modifier               key        									function        argument */
+	{ MODKEY|ShiftMask,				XK_Return, 									spawn,          SHCMD("rofi -show run") },
+	{ MODKEY,             		XK_Return, 									spawn,          SHCMD("alacritty") },
+	{ MODKEY,             		XK_e,	   										spawn,     	   	SHCMD("firefox") },
+	{ MODKEY,             		XK_z,	   										spawn,     	   	SHCMD("thunar") },
+	{ MODKEY,             		XK_p, 	   									spawn,          SHCMD("pavucontrol") },
+	{ MODKEY,             		XK_r, 	   									spawn,          SHCMD("rhythmbox") },
+	{ MODKEY,             		XK_t, 	   									spawn,          SHCMD("rawtherapee") },
+	{ MODKEY,             		XK_g, 	   									spawn,          SHCMD("gimp") },
+	{ MODKEY,             		XK_c, 	   									spawn,          SHCMD("alacritty --class nvim-code,NvimCode -e nvim ~/Code") },
+	{ MODKEY,             		XK_s, 	   									spawn,          SHCMD("alacritty --class nvim-school,NvimSchool -e nvim ~/Documents/School") },
 
-	{ 0,                       	XF86XK_AudioLowerVolume, spawn, SHCMD("/usr/bin/pactl set-sink-volume 0 -5% && /home/matt/Code/scripts/lightdown.sh &") },
-	{ 0,                       	XF86XK_AudioMute, spawn, {.v = mutevol } },
-	{ 0,                       	XF86XK_AudioRaiseVolume, spawn, SHCMD("/usr/bin/pactl set-sink-volume 0 +5% && /home/matt/Code/scripts/lightup.sh &") },
-	{ 0,				XF86XK_MonBrightnessUp,	spawn,	{.v = light_up} },
-	{ 0,				XF86XK_MonBrightnessDown, spawn, {.v = light_down} },
-	
-	{0, 												XF86XK_Launch1, spawn, SHCMD("systemctl suspend")},
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
-	{ MODKEY,             		XK_a,      rotatestack,    {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_j,      rotatestack,    {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_k,      rotatestack,    {.i = -1 } },
-	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_Return, zoom,           {0} },
-	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY,            		XK_q,      killclient,     {0} },
-	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY,             		XK_f,      togglefullscr,  {0} },
-	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
-	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
+	{ 0,											XF86XK_AudioLowerVolume,		spawn, 					SHCMD("/usr/bin/pactl set-sink-volume 0 -5%") },
+	{ 0,                      XF86XK_AudioRaiseVolume, 		spawn, 					SHCMD("/usr/bin/pactl set-sink-volume 0 +5%") },
+	{ 0,                      XF86XK_AudioMute,						spawn,					SHCMD("/usr/bin/pactl set-sink-mute 0 toggle") },
+	{ 0,             					XF86XK_AudioMicMute, 				spawn, 					SHCMD("cadence") },
+	{ 0,											XF86XK_MonBrightnessUp,			spawn,					SHCMD("/usr/bin/light -A 5") },
+	{ 0,											XF86XK_MonBrightnessDown, 	spawn, 					SHCMD("/usr/bin/light -U 5") },
+	{ 0, 											XF86XK_Launch1, 						spawn, 					SHCMD("systemctl suspend") },
+
+	{ MODKEY,                 XK_b,      									togglebar,      {0} },
+	{ MODKEY,             		XK_a,      									rotatestack,    {.i = +1 } },
+	{ MODKEY|ShiftMask,       XK_j,      									rotatestack,    {.i = +1 } },
+	{ MODKEY|ShiftMask,       XK_k,      									rotatestack,    {.i = -1 } },
+	{ MODKEY,                 XK_j,      									focusstack,     {.i = +1 } },
+	{ MODKEY,                 XK_k,      									focusstack,     {.i = -1 } },
+	{ MODKEY,                 XK_i,      									incnmaster,     {.i = +1 } },
+	{ MODKEY,                 XK_d,      									incnmaster,     {.i = -1 } },
+	{ MODKEY,                 XK_h,      									setmfact,       {.f = -0.05} },
+	{ MODKEY,                 XK_l,      									setmfact,       {.f = +0.05} },
+	{ MODKEY,                 XK_w, 											zoom,           {0} },
+	{ MODKEY,                 XK_Tab,    									view,           {0} },
+	{ MODKEY,            			XK_q,      									killclient,     {0} },
+	{ MODKEY|ShiftMask,       XK_space,  									togglefloating, {0} },
+	{ MODKEY,             		XK_f,      									togglefullscr,  {0} },
+	{ MODKEY,                 XK_0,      									view,           {.ui = ~0 } },
+	{ MODKEY|ShiftMask,       XK_0,      									tag,            {.ui = ~0 } },
+	{ MODKEY,                 XK_comma,  									focusmon,       {.i = -1 } },
+	{ MODKEY,                 XK_period, 									focusmon,       {.i = +1 } },
+	{ MODKEY|ShiftMask,       XK_comma,  									tagmon,         {.i = -1 } },
+	{ MODKEY|ShiftMask,       XK_period, 									tagmon,         {.i = +1 } },
+	{ MODKEY,                 XK_minus,  									setgaps,        {.i = -1 } },
+	{ MODKEY,                 XK_equal,  									setgaps,        {.i = +1 } },
+	{ MODKEY|ShiftMask,      	XK_equal,  									setgaps,        {.i = 0  } },
+	{ MODKEY|ShiftMask,       XK_q,      									quit,           {0} },
+
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -137,7 +132,6 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
 
 /* button definitions */
@@ -147,7 +141,7 @@ static Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
+	{ ClkStatusText,        0,              Button2,        spawn,          SHCMD("alacritty") },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
