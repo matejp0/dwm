@@ -86,6 +86,7 @@ static Key keys[] = {
 	{ MODKEY,             		XK_r, 	   									spawn,          SHCMD("rhythmbox") },
 	{ MODKEY,             		XK_t, 	   									spawn,          SHCMD("rawtherapee") },
 	{ MODKEY,             		XK_g, 	   									spawn,          SHCMD("gimp") },
+	{ MODKEY,             		XK_m, 	   									spawn,          SHCMD("thunderbird") },
 	{ MODKEY,             		XK_c, 	   									spawn,          SHCMD("alacritty --class nvim-code,NvimCode -e nvim ~/Code") },
 	{ MODKEY,             		XK_s, 	   									spawn,          SHCMD("alacritty --class nvim-school,NvimSchool -e nvim ~/Documents/School") },
 
