@@ -4,6 +4,7 @@
 - actualfullscreen
 - alpha
 - autostart
+- barpadding
 - fixborders
 - focusmonmouse
 - fullgaps
