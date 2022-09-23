@@ -39,10 +39,12 @@ static const Rule rules[] = {
 	{ "Cadence",     	NULL,       NULL,       1 << 2,       1,             0,           0 },
 	{ "Gimp",     		NULL,       NULL,       1 << 3,       1,             0,           -1 },
 	{ "Rawtherapee", 	NULL, 			NULL,				1 << 3,				1,						 0,						-1 },
+	{ "Darktable", 		NULL, 			NULL,				1 << 3,				1,						 0,						-1 },
 	{ "NvimSchool",  	NULL,       NULL,       1 << 3,       1,             0,           -1 },
 	{ "thunderbird",  NULL,  			NULL,       1 << 4,       1,             0,           -1 },
 	{ "Thunar",   		NULL,       NULL,       1 << 5,       1,             0,           -1 },
 	{ "Rhythmbox", 		NULL, 			NULL,				1 << 6,				1,						 0,						-1 },
+
 
 };
 
@@ -71,14 +73,14 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static const char *dmenucmd[] = {"rofi -show run", NULL}; 
+static const char *dmenucmd[] = {"rofi", "-show", "run", NULL}; 
 static char dmenumon[2] = "0";
 
 #include <X11/XF86keysym.h>
 
 static Key keys[] = {
 	/* modifier               key        									function        argument */
-	{ MODKEY|ShiftMask,				XK_Return, 									spawn,          SHCMD("rofi -show run") },
+	{ MODKEY|ShiftMask,				XK_Return, 									spawn,          { .v = dmenucmd } },
 	{ MODKEY,             		XK_Return, 									spawn,          SHCMD("alacritty") },
 	{ MODKEY,             		XK_e,	   										spawn,     	   	SHCMD("firefox") },
 	{ MODKEY,             		XK_z,	   										spawn,     	   	SHCMD("thunar") },
@@ -87,9 +89,12 @@ static Key keys[] = {
 	{ MODKEY,             		XK_t, 	   									spawn,          SHCMD("rawtherapee") },
 	{ MODKEY,             		XK_g, 	   									spawn,          SHCMD("gimp") },
 	{ MODKEY,             		XK_m, 	   									spawn,          SHCMD("thunderbird") },
-	{ MODKEY,             		XK_c, 	   									spawn,          SHCMD("alacritty --class nvim-code,NvimCode -e nvim ~/Code") },
-	{ MODKEY,             		XK_s, 	   									spawn,          SHCMD("alacritty --class nvim-school,NvimSchool -e nvim ~/Documents/School") },
 
+
+	{ MODKEY,             		XK_o, 	   									spawn,          SHCMD("alacritty -e 'echo $PATH && sleep 5000'") },
+
+
+	{ MODKEY,             		XK_s, 	   									spawn,          SHCMD("/usr/local/bin/slock") },
 	{ 0,											XF86XK_AudioLowerVolume,		spawn, 					SHCMD("/usr/bin/pactl set-sink-volume 0 -5%") },
 	{ 0,                      XF86XK_AudioRaiseVolume, 		spawn, 					SHCMD("/usr/bin/pactl set-sink-volume 0 +5%") },
 	{ 0,                      XF86XK_AudioMute,						spawn,					SHCMD("/usr/bin/pactl set-sink-mute 0 toggle") },
