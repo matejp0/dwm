@@ -46,7 +46,7 @@ static const Rule rules[] = {
 	{ "thunderbird",  NULL,  			NULL,       1 << 4,       1,             0,           -1 },
 	{ "Thunar",   		NULL,       NULL,       1 << 5,       1,             0,           -1 },
 	{ "Rhythmbox", 		NULL, 			NULL,				1 << 6,				1,						 0,						-1 },
-
+	{ "Clementine", 	NULL, 			NULL,				1 << 6,				1,						 0,						-1 },
 
 };
 
@@ -88,6 +88,7 @@ static Key keys[] = {
 	{ MODKEY,             		XK_z,	   										spawn,     	   	SHCMD("thunar") },
 	{ MODKEY,             		XK_p, 	   									spawn,          SHCMD("pavucontrol") },
 	{ MODKEY,             		XK_r, 	   									spawn,          SHCMD("rhythmbox") },
+	{ MODKEY,             		XK_c, 	   									spawn,          SHCMD("clementine") },
 	{ MODKEY,             		XK_t, 	   									spawn,          SHCMD("rawtherapee") },
 	{ MODKEY,             		XK_g, 	   									spawn,          SHCMD("gimp") },
 	{ MODKEY,             		XK_m, 	   									spawn,          SHCMD("thunderbird") },
